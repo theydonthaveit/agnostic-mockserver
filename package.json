@@ -1,0 +1,25 @@
+{
+  "name": "agnostic-mockserver",
+  "version": "0.0.1",
+  "description": "Mock any API with MockServer built with Docker and Node (tsc)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theydonthaveit/agnostic-mockserver.git"
+  },
+  "author": "Alan Williams",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theydonthaveit/agnostic-mockserver/issues"
+  },
+  "homepage": "https://github.com/theydonthaveit/agnostic-mockserver#readme",
+  "dependencies": {
+    "package.json": "^2.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^2.4.2"
+  }
+}
