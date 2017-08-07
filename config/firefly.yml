@@ -1,0 +1,272 @@
+name: Firefly
+method: 
+  - POST
+  - GET
+endpoints: 
+  - name: carrier
+    method: POST
+    responseContentType: application/json
+    description: retrieve the carrier that is configured for some shipping data
+    exampleResponse: '{
+      "carrier": "INTERNAL"
+    }'
+    invalidRequest:
+    - "400"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    unfulfillableRequest:
+    - "422"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    internalServerError:
+    - "500"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    badGateway:
+    - "502"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+  - name: v2/book/shipment
+    method: POST
+    responseContentType: application/json
+    description: register a shipment with a carrier and return shipping label data if applicable
+    exampleResponse: '{
+      "orderId": "string",
+      "releaseNumber": 0,
+      "outwardBooking": {
+        "shipmentTrackingCode": "string",
+        "carrier": "NAP",
+        "shippingMethod": "string"
+      },
+      "returnBooking": {
+        "shipmentTrackingCode": "string",
+        "carrier": "NAP",
+        "shippingMethod": "string"
+      },
+      "isPaperless": true,
+      "packages": [
+        {
+          "packageId": "string",
+          "packageTrackingCode": "string",
+          "labels": [
+            {
+              "documentType": "string",
+              "format": "EPL64"
+            }
+          ]
+        }
+      ]
+    }'
+    invalidRequest:
+    - "400"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    unfulfillableRequest:
+    - "422"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    internalServerError:
+    - "500"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    badGateway:
+    - "502"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+  - name: validate/address
+    method: POST
+    responseContentType: application/json
+    description: register a shipment with a carrier and return shipping label data if applicable
+    exampleResponse: '{
+      "addressValid": true,
+      "validationFailures": [
+        {
+          "code": "string",
+          "message": "string"
+        }
+      ]
+    }'
+    invalidRequest:
+    - "400"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    unfulfillableRequest:
+    - "422"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    internalServerError:
+    - "500"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    badGateway:
+    - "502"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+  - name: book/shipment
+    method: POST
+    responseContentType: application/json
+    description: register a shipment with a carrier and return shipping label data if applicable
+    exampleResponse: '{
+      "outwardAirWaybill": "string",
+      "returnAirWaybill": "string",
+      "outwardShippingMethod": "string",
+      "returnShippingMethod": "string",
+      "carrier": "NAP",
+      "packages": [
+        {
+          "packageId": "string",
+          "trackingCode": "string",
+          "labels": [
+            {
+              "name": "string",
+              "format": "EPL64",
+              "printableType": "carrier_label",
+              "data": {
+                "value": [
+                  null
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }'
+    invalidRequest:
+    - "400"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    unfulfillableRequest:
+    - "422"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    internalServerError:
+    - "500"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    badGateway:
+    - "502"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+  - name: health
+    method: GET
+    responseContentType: application/json
+    exampleResponse: '{
+      "overview": "ok",
+      "components": [
+        {
+          "name": "database",
+          "ok": true,
+          "criticalComponent": true,
+          "description": "ok"
+        },
+        {
+          "name": "internet",
+          "ok": true,
+          "criticalComponent": true,
+          "description": "ok"
+        },
+        {
+          "name": "dhl",
+          "ok": true,
+          "criticalComponent": false,
+          "description": "ok"
+        },
+        {
+          "name": "ups",
+          "ok": true,
+          "criticalComponent": false,
+          "description": "ok"
+        },
+        {
+          "name": "falcon",
+          "ok": true,
+          "criticalComponent": false,
+          "description": "ok"
+        }
+      ],
+      "reports": [
+        {
+          "name": "clock",
+          "data": "2017-07-31T11:39:55.357Z[UTC]"
+        },
+        {
+          "name": "buildInfo",
+          "data": {
+            "name": "firefly",
+            "jenkinsBuild": "299",
+            "gitCommit": "d33383597f39da2e2edf005e120dd10129b52c9d",
+            "scalaVersion": "2.11.7",
+            "version": "0.2",
+            "sbtVersion": "0.13.11"
+          }
+        }
+      ]
+    }'
+  - name: lbhealth
+    method: GET
+    responseContentType: application/json
+    exampleResponse: '{
+      "overview": "ok",
+      "components": [
+        {
+          "name": "database",
+          "ok": true,
+          "criticalComponent": true,
+          "description": "ok"
+        },
+        {
+          "name": "internet",
+          "ok": true,
+          "criticalComponent": true,
+          "description": "ok"
+        }
+      ]
+    }'

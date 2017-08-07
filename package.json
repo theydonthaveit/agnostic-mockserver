@@ -2,8 +2,10 @@
   "name": "agnostic-mockserver",
   "version": "0.0.1",
   "description": "Mock any API with MockServer built with Docker and Node (tsc)",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
+    "build": "tsc",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,9 +19,15 @@
   },
   "homepage": "https://github.com/theydonthaveit/agnostic-mockserver#readme",
   "dependencies": {
-    "package.json": "^2.0.1"
+    "ajv": "^5.2.2",
+    "hapi": "^16.5.0",
+    "is-json": "^2.0.1",
+    "json-compare": "0.0.15",
+    "json-file": "^0.1.0"
   },
   "devDependencies": {
-    "typescript": "^2.4.2"
+    "@types/node": "^8.0.19",
+    "typescript": "^2.4.2",
+    "yamljs": "^0.3.0"
   }
 }
