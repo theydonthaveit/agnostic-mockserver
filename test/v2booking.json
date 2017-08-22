@@ -1,0 +1,30 @@
+{
+  "origin": "DC1",
+  "businessCode": "MRP",
+  "dimensionUnit": "IN",
+  "items": [
+    {
+      "gtin": "2234-GHYU-1234",
+      "description": "Necklace",
+      "attributes": [
+        "JEWELLERY"
+      ],
+      "isDocument": true,
+      "hsCode": "HAZMT_LQ"
+    }
+  ],
+  "packages": [
+    {
+      "packageId": "PackageA",
+      "height": 1,
+      "length": 1,
+      "width": 1,
+      "weight": 1
+    }
+  ],
+  "weightUnit": "LBS",
+  "requestLogo": false,
+  "labelResolution": 300,
+  "orderId": "1",
+  "releaseNumber": 1
+}

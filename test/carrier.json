@@ -1,0 +1,14 @@
+{
+  "originCode": "DC2",
+  "businessCode": "MRP",
+  "optionId": "STANDARD",
+  "destination": {
+    "line1": "someAddress",
+    "line2": "someAddress",
+    "line3": "someAddress",
+    "city": "London",
+    "country": "GB",
+    "division": "London",
+    "postalCode": "W12 7SL"
+  }
+}

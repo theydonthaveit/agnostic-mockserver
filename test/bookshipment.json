@@ -1,0 +1,57 @@
+{
+  "origin_code": "DC3",
+  "option_id": "9000521-001",
+  "business_code": "NAP",
+  "currency_code": "GBP",
+  "dimension_unit": "IN",
+  "duty": "DDP",
+  "is_signature_required": true,
+  "nominated_date": "2016-07-09",
+  "items": [
+    {
+      "product_id": "12121-11",
+      "description": "Necklace",
+      "attributes": [
+        "JEWELLERY"
+      ],
+      "is_document": true,
+      "is_returnable": true,
+      "sku": "12121-11",
+      "value": 1
+    }
+  ],
+  "hs_codes": [],
+  "packages": [
+    {
+      "package_id": "PackageA",
+      "height": 1,
+      "length": 1,
+      "width": 1,
+      "weight": 1,
+      "volumetric_weight": 4
+    }
+  ],
+  "ship_to": {
+    "address": {
+      "line1": "someAddress",
+      "line2": "someAddress",
+      "line3": "someAddress",
+      "city": "London",
+      "country": "GB",
+      "division": "London",
+      "postalCode": "W12 7SL"
+    },
+    "contact": {
+      "email_address": "phill@net-a-porter.com",
+      "name": "Phillip Taylor",
+      "phone_number": "7397382"
+    }
+  },
+  "shipment_reference": "MyShip12211",
+  "weight_unit": "LBS",
+  "request_logo": false,
+  "label_resolution": 300,
+  "shipment_customs_value": 12.5,
+  "label_format": "ZPL",
+  "sender_reference": "DC1"
+}

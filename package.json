@@ -20,10 +20,7 @@
   "homepage": "https://github.com/theydonthaveit/agnostic-mockserver#readme",
   "dependencies": {
     "ajv": "^5.2.2",
-    "hapi": "^16.5.0",
-    "is-json": "^2.0.1",
-    "json-compare": "0.0.15",
-    "json-file": "^0.1.0"
+    "hapi": "^16.5.0"
   },
   "devDependencies": {
     "@types/node": "^8.0.19",

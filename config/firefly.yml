@@ -2,11 +2,62 @@ name: Firefly
 method: 
   - POST
   - GET
+default_bad_url: '{
+    "errorCode": "InvalidRemoteServiceResponse",
+    "errorMessage": "string",
+    "confirmedCarrierFailure": true
+  }'
 endpoints: 
   - name: carrier
     method: POST
     responseContentType: application/json
     description: retrieve the carrier that is configured for some shipping data
+    schema: '{
+        "type": "object",
+        "properties": {
+            "originCode": {
+                "type": "string",
+                "pattern": "DC1|DC2|DC3"
+            },
+            "businessCode": {
+                "type": "string",
+                "pattern": "MRP|NAP|JCH|TON"
+            },
+            "optionId": {
+                "type": "string"
+            },
+            "destination": {
+              "type": "object",
+                "properties": {
+                    "line1": { 
+                        "type": "string"
+                    },
+                    "line2": { 
+                        "type": "string"
+                    },
+                    "line3": { 
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string",
+                        "pattern": "[a-z]"
+                    },
+                    "country": {
+                        "type": "string",
+                        "pattern": "AZ|PW|HN|CY|GI|AI|LC|UG|LS|FM|LI|MA|MO|IC|TZ|CR|LV|CW|MX|ME|PY|ID|SY|BM|VU|GH|JP|TH|GU|GP|NI|NP|CN|BG|AR|PG|IE|EE|UY|RU|TR|BO|QA|MP|GM|BB|AW|AN|ST|LA|AO|KN|BT|GT|TN|AS|TL|BS|LR|TO|PH|BY|MC|SR|PF|LB|EG|MU|VC|SC|GD|AL|HR|GG|ML|SN|PK|KY|EC|BN|MV|BA|CK|FI|MH|NZ|KZ|ES|KW|FK|GF|BD|PR|TC|MS|IS|TG|MG|WS|NL|GR|PA|SZ|FO|VI|TW|MW|JO|PL|GA|TT|DE|KP|CV|KR|DO|SG|CH|HK|BZ|RO|AD|IL|BL|DK|GB|TV|SL|BE|HT|MN|VE|IT|VG|HU|FR|CO|SA|CZ|UA|US|DZ|ZA|JM|SI|DM|PT|NA|GE|RE|KE|NC|GL|MQ|AE|PE|MZ|CA|MY|SB|KM|MT|ET|AM|FJ|VN|SM|JE|NO|OM|KH|SV|AU|RS|BR|LK|YE|BH|GY|SE|LU|SK|AG|MD|CM|MK|IN|CL|LT|BW|AT"
+                    },
+                    "division": { 
+                        "type": "string"
+                    },
+                    "postalCode": { 
+                        "type": "string"
+                    }
+                },
+                "required": ["line1", "country"]
+            }
+        },
+        "required": ["originCode", "businessCode", "optionId", "destination"]
+    }'
     exampleResponse: '{
       "carrier": "INTERNAL"
     }'
@@ -38,10 +89,333 @@ endpoints:
         "errorMessage": "string",
         "confirmedCarrierFailure": true
       }'
-  - name: v2/book/shipment
+  - name: bookshipment
+    method: POST
+    schema: '{
+        "type": "object",
+        "properties": {
+            "origin_code": {
+                "type": "string",
+                "pattern": "DC1|DC2|DC3"
+            },
+            "option_id": {
+                "type": "string"
+            },
+            "businessCode": {
+                "type": "string",
+                "pattern": "MRP|NAP|JCH|TON"
+            },
+            "currency_code": {
+                "type": "string",
+                "pattern": "HRK|USD|RON|PLN|HUF|BGN|CNY|EUR|JPY|KRW|HKD|AUD|GBP|SEK|CZK|DKK"
+            },
+            "dimension_unit": {
+                "type": "string",
+                "pattern": "CM|IN"
+            },
+            "duty": {
+                "type": "string",
+                "pattern": "DDP|No|DDU"
+            },
+            "is_signature_required": {
+                "type": "boolean"
+            },
+            "nominated_date": {
+                "type": "string"
+            },
+            "items": {
+                "type": "array",
+                "items": {
+                    "properties": {
+                        "product_id": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "attributes": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "JEWELLERY|NO_MID|HZMT_EQ|FISH_FARMED|HZMT_AERO|CITES|MIDDLEEAST|DO_NOT_EXP|SMN_BEAUTY|BIKE|NONHMB|HPANDSP|FISH_WILD|FIGURES|GOOSE|HZMT_LQ|FINE_JEWEL|LITHIUMBAT|HAZMAT|VHV|FISH_AND_WILDLIFE_NA|WILDLIFE|CH_ORIGIN"
+                            }
+                        },
+                        "is_document": {
+                            "type": "boolean"
+                        },
+                        "is_returnable": {
+                            "type": "boolean"
+                        },
+                        "sku": {
+                            "type": "string"
+                        },
+                        "value": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "required": ["product_id", "description", "attributes", "is_document", "is_returnable", "sku", "value"]
+            },
+            "hs_codes": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "packages": {
+                "type": "array",
+                "items": {
+                    "properties": {
+                        "package_id": {
+                            "type": "string"
+                        },
+                        "height": {
+                            "type": "number"
+                        },
+                        "length": {
+                            "type": "number"
+                        },
+                        "width": {
+                            "type": "number"
+                        },
+                        "weight": {
+                            "type": "number"
+                        },
+                        "volumetric_weight": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "required": ["product_id", "height", "length", "width", "weight", "volumetric_weight"]
+            },
+            "ship_to": {
+                "properties": {
+                    "address": {
+                        "properties": {
+                            "line1": {
+                                "type": "string"
+                            },
+                            "line2": {
+                                "type": "string"
+                            },
+                            "line3": {
+                                "type": "string"
+                            },
+                            "city": {
+                                "type": "string"
+                            },
+                            "country": {
+                                "type": "string",
+                                "pattern": "AZ|PW|HN|CY|GI|AI|LC|UG|LS|FM|LI|MA|MO|IC|TZ|CR|LV|CW|MX|ME|PY|ID|SY|BM|VU|GH|JP|TH|GU|GP|NI|NP|CN|BG|AR|PG|IE|EE|UY|RU|TR|BO|QA|MP|GM|BB|AW|AN|ST|LA|AO|KN|BT|GT|TN|AS|TL|BS|LR|TO|PH|BY|MC|SR|PF|LB|EG|MU|VC|SC|GD|AL|HR|GG|ML|SN|PK|KY|EC|BN|MV|BA|CK|FI|MH|NZ|KZ|ES|KW|FK|GF|BD|PR|TC|MS|IS|TG|MG|WS|NL|GR|PA|SZ|FO|VI|TW|MW|JO|PL|GA|TT|DE|KP|CV|KR|DO|SG|CH|HK|BZ|RO|AD|IL|BL|DK|GB|TV|SL|BE|HT|MN|VE|IT|VG|HU|FR|CO|SA|CZ|UA|US|DZ|ZA|JM|SI|DM|PT|NA|GE|RE|KE|NC|GL|MQ|AE|PE|MZ|CA|MY|SB|KM|MT|ET|AM|FJ|VN|SM|JE|NO|OM|KH|SV|AU|RS|BR|LK|YE|BH|GY|SE|LU|SK|AG|MD|CM|MK|IN|CL|LT|BW|AT"
+                            },
+                            "division": {
+                                "type": "string"
+                            },
+                            "postalCode": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["line1", "country"]
+                    },
+                    "contract": {
+                        "properties": {
+                            "email_address": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "phone_number": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["email_address", "name", "phone_number"]
+                    }
+                },
+                "required": ["address", "contact"]
+            },
+            "shipment_reference": {
+                "type": "string"
+            },
+            "weight_unit": {
+                "type": "string",
+                "pattern": "LBS|KGS"
+            },
+            "request_logo": {
+                "type": "boolean"
+            },
+            "label_resolution": {
+                "type": "number",
+                "pattern": "203|300"
+            },
+            "shipment_customs_value": {
+                "type": "number"
+            },
+            "label_format": {
+                "anyOf": [
+                    { "type": "object" },
+                    { "type": "string" }
+                ]
+            },
+            "sender_reference": {
+                "anyOf": [
+                    { "type": "object" },
+                    { "type": "string" }
+                ]
+            }
+        },
+        "required": [
+            "origin_code", "option_id", "business_code", "currency_code", "dimension_unit", "duty", "is_signature_required", "items", "hs_codes", "packages", "ship_to", "shipment_reference", "weight_unit", "request_logo", "label_resolution", "shipment_customs_value"
+        ]
+    }'
+    responseContentType: application/json
+    description: register a shipment with a carrier and return shipping label data if applicable
+    exampleResponse: '{
+      "outwardAirWaybill": "string",
+      "returnAirWaybill": "string",
+      "outwardShippingMethod": "string",
+      "returnShippingMethod": "string",
+      "carrier": "NAP",
+      "packages": [
+        {
+          "packageId": "string",
+          "trackingCode": "string",
+          "labels": [
+            {
+              "name": "string",
+              "format": "EPL64",
+              "printableType": "carrier_label",
+              "data": {
+                "value": [
+                  null
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }'
+    invalidRequest:
+    - "400"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    unfulfillableRequest:
+    - "422"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    internalServerError:
+    - "500"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    badGateway:
+    - "502"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+  - name: v2bookshipment
     method: POST
     responseContentType: application/json
     description: register a shipment with a carrier and return shipping label data if applicable
+    schema: '{
+        "type": "object",
+        "properties": {
+            "origin": {
+                "type": "string",
+                "pattern": "DC1|DC2|DC3"
+            },
+            "businessCode": {
+                "type": "string",
+                "pattern": "MRP|NAP|JCH|TON"
+            },
+            "dimensionUnit": {
+                "type": "string",
+                "pattern": "IN|CM"
+            },
+            "items": {
+                "type":"array",
+                "items": {
+                    "properties": {
+                        "gtin": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "attributes": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "JEWELLERY|NO_MID|HZMT_EQ|FISH_FARMED|HZMT_AERO|CITES|MIDDLEEAST|DO_NOT_EXP|SMN_BEAUTY|BIKE|NONHMB|HPANDSP|FISH_WILD|FIGURES|GOOSE|HZMT_LQ|FINE_JEWEL|LITHIUMBAT|HAZMAT|VHV|FISH_AND_WILDLIFE_NA|WILDLIFE|CH_ORIGIN"
+                            }
+                        },
+                        "isDocument": {
+                            "type": "boolean"
+                        },
+                        "hsCode": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                "gtin", "description", "attributes", "isDocument", "hsCode"
+                ]
+            },
+            "packages": {
+                "type": "array",
+                "items": {
+                    "properties": {
+                        "packageId": {
+                            "type": "string"
+                        },
+                        "height": {
+                            "type": "number"
+                        },
+                        "length": {
+                            "type": "number"
+                        },
+                        "width": {
+                            "type": "number"
+                        },
+                        "weight": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "required": ["packageId", "height", "length", "width", "weight"]
+            },
+            "weightUnit": {
+                "type": "string",
+                "pattern": "KGS|LBS"
+            },
+            "requestLogo": {
+                "type": "boolean"
+            },
+            "labelResolution": {
+                "type": "number",
+                "pattern": "203|300"
+            },
+            "orderId": {
+                "type": "string"
+            },
+            "releaseNumber": {
+                "type": "integer"
+            }
+        },
+        "required": [
+            "origin", "businessCode", "dimensionUnit", "items", "packages", "weightUnit", "requestLogo", "labelResolution", "orderId", "releaseNumber"
+        ]
+    }'
     exampleResponse: '{
       "orderId": "string",
       "releaseNumber": 0,
@@ -97,8 +471,220 @@ endpoints:
         "errorMessage": "string",
         "confirmedCarrierFailure": true
       }'
-  - name: validate/address
+  - name: v3bookshipment
     method: POST
+    responseContentType: application/json
+    description: register a shipment with a carrier and return shipping label data if applicable
+    schema: '{
+        "type": "object",
+        "properties": {
+            "origin": {
+                "type": "string",
+                "pattern": "DC1|DC2|DC3"
+            },
+            "businessCode": {
+                "type": "string",
+                "pattern": "MRP|NAP|JCH|TON"
+            },
+            "dimensionUnit": {
+                "type": "string",
+                "pattern": "IN|CM"
+            },
+            "items": {
+                "type":"array",
+                "items": {
+                    "properties": {
+                        "gtin": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "attributes": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "JEWELLERY|NO_MID|HZMT_EQ|FISH_FARMED|HZMT_AERO|CITES|MIDDLEEAST|DO_NOT_EXP|SMN_BEAUTY|BIKE|NONHMB|HPANDSP|FISH_WILD|FIGURES|GOOSE|HZMT_LQ|FINE_JEWEL|LITHIUMBAT|HAZMAT|VHV|FISH_AND_WILDLIFE_NA|WILDLIFE|CH_ORIGIN"
+                            }
+                        },
+                        "isDocument": {
+                            "type": "boolean"
+                        },
+                        "hsCode": {
+                            "type": "string"
+                        },
+                        "classification": {
+                            "type": "string"
+                        },
+                        "fabric": {
+                            "type": "string"
+                        },
+                        "productType": {
+                            "type": "string"
+                        },
+                        "productSubType": {
+                            "type": "string"
+                        },
+                        "countryOfManufacture": {
+                            "type": "string"
+                        },
+                        "designerName": {
+                            "type": "string"
+                        },
+                        "weight": {
+                            "type": "number"
+                        },
+                        "dangerousGoodsDescription": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "gtin", "description", "attributes", "isDocument", "hsCode", "classification", "fabric", "productType", "productSubType", "countryOfManufacture", "designerName", "weight", "dangerousGoodsDescription"
+                ]
+            },
+            "packages": {
+                "type": "array",
+                "items": {
+                    "properties": {
+                        "packageId": {
+                            "type": "string"
+                        },
+                        "height": {
+                            "type": "number"
+                        },
+                        "length": {
+                            "type": "number"
+                        },
+                        "width": {
+                            "type": "number"
+                        },
+                        "weight": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "required": ["packageId", "height", "length", "width", "weight"]
+            },
+            "weightUnit": {
+                "type": "string",
+                "pattern": "KGS|LBS"
+            },
+            "requestLogo": {
+                "type": "boolean"
+            },
+            "labelResolution": {
+                "type": "number",
+                "pattern": "203|300"
+            },
+            "orderId": {
+                "type": "string"
+            },
+            "releaseNumber": {
+                "type": "integer"
+            }
+        },
+        "required": [
+            "origin", "businessCode", "dimensionUnit", "items", "packages", "weightUnit", "requestLogo", "labelResolution", "orderId", "releaseNumber"
+        ]
+    }'
+    exampleResponse: '{
+      "orderId": "string",
+      "releaseNumber": 0,
+      "outwardBooking": {
+        "shipmentTrackingCode": "string",
+        "carrier": "NAP",
+        "shippingMethod": "string"
+      },
+      "returnBooking": {
+        "shipmentTrackingCode": "string",
+        "carrier": "NAP",
+        "shippingMethod": "string"
+      },
+      "isPaperless": true,
+      "packages": [
+        {
+          "packageId": "string",
+          "packageTrackingCode": "string",
+          "labels": [
+            {
+              "documentType": "string",
+              "format": "ZPL64"
+            }
+          ]
+        }
+      ]
+    }'
+    invalidRequest:
+    - "400"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    unfulfillableRequest:
+    - "422"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    internalServerError:
+    - "500"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    badGateway:
+    - "502"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+  - name: validateaddress
+    method: POST
+    schema: '{
+        "type": "object",
+        "properties": {
+            "shipmentReference": {
+                "type": "string"
+            },
+            "originCode": {
+                "type": "string",
+                "pattern": "DC1|DC2|DC3"
+            },
+            "businessCode": {
+                "type": "string",
+                "pattern": "MRP|NAP|JCH|TON"
+            },
+            "optionId": {
+                "type": "string"
+            },
+            "shipTo": {
+                "properties": {
+                    "address": {
+                        "properties": {
+                            "line1": {
+                                "type": "string"
+                            },
+                            "line2": {},
+                            "line3": {},
+                            "city": {},
+                            "country": {
+                                "type": "string",
+                                "pattern": "AZ|PW|HN|CY|GI|AI|LC|UG|LS|FM|LI|MA|MO|IC|TZ|CR|LV|CW|MX|ME|PY|ID|SY|BM|VU|GH|JP|TH|GU|GP|NI|NP|CN|BG|AR|PG|IE|EE|UY|RU|TR|BO|QA|MP|GM|BB|AW|AN|ST|LA|AO|KN|BT|GT|TN|AS|TL|BS|LR|TO|PH|BY|MC|SR|PF|LB|EG|MU|VC|SC|GD|AL|HR|GG|ML|SN|PK|KY|EC|BN|MV|BA|CK|FI|MH|NZ|KZ|ES|KW|FK|GF|BD|PR|TC|MS|IS|TG|MG|WS|NL|GR|PA|SZ|FO|VI|TW|MW|JO|PL|GA|TT|DE|KP|CV|KR|DO|SG|CH|HK|BZ|RO|AD|IL|BL|DK|GB|TV|SL|BE|HT|MN|VE|IT|VG|HU|FR|CO|SA|CZ|UA|US|DZ|ZA|JM|SI|DM|PT|NA|GE|RE|KE|NC|GL|MQ|AE|PE|MZ|CA|MY|SB|KM|MT|ET|AM|FJ|VN|SM|JE|NO|OM|KH|SV|AU|RS|BR|LK|YE|BH|GY|SE|LU|SK|AG|MD|CM|MK|IN|CL|LT|BW|AT"
+                            },
+                            "division": {},
+                            "postalCode": {}
+                        }
+                    }
+                }
+            }
+        },
+        "required": ["shipmentReference", "originCode", "businessCode", "optionId", "shipTo"]
+    }'
     responseContentType: application/json
     description: register a shipment with a carrier and return shipping label data if applicable
     exampleResponse: '{
@@ -138,32 +724,23 @@ endpoints:
         "errorMessage": "string",
         "confirmedCarrierFailure": true
       }'
-  - name: book/shipment
-    method: POST
+  - name: lbhealth
+    method: GET
     responseContentType: application/json
-    description: register a shipment with a carrier and return shipping label data if applicable
     exampleResponse: '{
-      "outwardAirWaybill": "string",
-      "returnAirWaybill": "string",
-      "outwardShippingMethod": "string",
-      "returnShippingMethod": "string",
-      "carrier": "NAP",
-      "packages": [
+      "overview": "ok",
+      "components": [
         {
-          "packageId": "string",
-          "trackingCode": "string",
-          "labels": [
-            {
-              "name": "string",
-              "format": "EPL64",
-              "printableType": "carrier_label",
-              "data": {
-                "value": [
-                  null
-                ]
-              }
-            }
-          ]
+          "name": "database",
+          "ok": true,
+          "criticalComponent": true,
+          "description": "ok"
+        },
+        {
+          "name": "internet",
+          "ok": true,
+          "criticalComponent": true,
+          "description": "ok"
         }
       ]
     }'
@@ -174,22 +751,8 @@ endpoints:
         "errorMessage": "string",
         "confirmedCarrierFailure": true
       }'
-    unfulfillableRequest:
-    - "422"
-    - '{
-        "errorCode": "InvalidRemoteServiceResponse",
-        "errorMessage": "string",
-        "confirmedCarrierFailure": true
-      }'
     internalServerError:
     - "500"
-    - '{
-        "errorCode": "InvalidRemoteServiceResponse",
-        "errorMessage": "string",
-        "confirmedCarrierFailure": true
-      }'
-    badGateway:
-    - "502"
     - '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
@@ -250,23 +813,17 @@ endpoints:
         }
       ]
     }'
-  - name: lbhealth
-    method: GET
-    responseContentType: application/json
-    exampleResponse: '{
-      "overview": "ok",
-      "components": [
-        {
-          "name": "database",
-          "ok": true,
-          "criticalComponent": true,
-          "description": "ok"
-        },
-        {
-          "name": "internet",
-          "ok": true,
-          "criticalComponent": true,
-          "description": "ok"
-        }
-      ]
-    }'
+    invalidRequest:
+    - "400"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'
+    internalServerError:
+    - "500"
+    - '{
+        "errorCode": "InvalidRemoteServiceResponse",
+        "errorMessage": "string",
+        "confirmedCarrierFailure": true
+      }'

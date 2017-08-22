@@ -1,34 +1,46 @@
-import * as console from 'console';
 import RouteConfigs from './routeConfigs'
-import SchemaConfigs from '../config/schema'
 import * as Ajv from 'ajv';
 
 class PostResponse {
-    public AJV
 
-    constructor() {
-        this.AJV = new Ajv()
+    constructor() {}
+
+    loopOverRouteConfig(requestPath: string) {
+        const RouteConfig = new RouteConfigs()
+        const pathName = requestPath.split('/').join('')
+        let RouteResponse
+
+        for ( let endpoint of RouteConfig.Configs.endpoints ) {
+            if ( pathName.match(endpoint.name) ) {
+                RouteResponse = endpoint
+            }
+        }
+
+        return RouteResponse
     }
 
     public retrieveResponse(requestPath: string, payload: any) {
-        const RouteResponse = new RouteConfigs()
-        const SchemaResponse = new SchemaConfigs(requestPath)
+        const AJV = new Ajv()
+        const RouteResponse = this.loopOverRouteConfig(requestPath)
+        const pathName = requestPath.split('/').join('')
 
-        let validate =
-            this.AJV.validate(SchemaResponse.schemaName, payload)
+        let isValid
 
-        for ( const endpoint of RouteResponse.Configs.endpoints ) {
-            if ( validate ) {
-                if ( endpoint.name === requestPath ) {
-                    return endpoint.exampleResponse
-                }
-                else {
-                    return endpoint.invalidRequest
-                }
+        if ( pathName.match(RouteResponse.name) ) {
+            let validSchema = AJV.compile(JSON.parse(RouteResponse.schema))
+            isValid = validSchema(payload)
+        }
+        
+        if ( isValid ) {
+            if ( pathName.match(RouteResponse.name) && !(!payload) ) {
+                return RouteResponse.exampleResponse
             }
             else {
-                return endpoint.unfulfillableRequest
+                return RouteResponse.invalidRequest
             }
+        }
+        else {
+            return RouteResponse.unfulfillableRequest
         }
     }
 }
