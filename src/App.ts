@@ -1,4 +1,3 @@
-import * as console from 'console';
 import * as Hapi from 'hapi';
 import GetResponse from './getRequestResponse'
 import PostResponse from './postRequestResponse';
@@ -15,7 +14,7 @@ class App {
     private connection(): void {
         this.Hapi.connection({
             port: 3000,
-            host: '0.0.0.0' 
+            host: '0.0.0.0'
         })
     }
 
@@ -47,7 +46,7 @@ class App {
 
         this.Hapi.route({
             method: 'POST',
-            path: '/{operation}',
+            path: '/carrier',
             handler: function (request, reply) {
                 reply(p.retrieveResponse(request.path, request.payload))
             }

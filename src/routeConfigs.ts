@@ -9,7 +9,7 @@ class RouteConfig {
     }
 
     private retrieveConfigs() {
-        let files = Fs.readdirSync('../config/')
+        let files = Fs.readdirSync('.')
         return files
     }
 
@@ -24,7 +24,7 @@ class RouteConfig {
             }
         }
     
-        return yamlFile = Yaml.load(`../config/${currentFile}`)
+        return yamlFile = Yaml.load(`${currentFile}`)
     }
 }
 

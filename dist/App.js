@@ -40,7 +40,7 @@ class App {
         });
         this.Hapi.route({
             method: 'POST',
-            path: '/{operation}',
+            path: '/carrier',
             handler: function (request, reply) {
                 reply(p.retrieveResponse(request.path, request.payload));
             }

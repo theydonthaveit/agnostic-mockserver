@@ -10,12 +10,13 @@ class GetResponse {
         for (let endpoint of RouteConfig.Configs.endpoints) {
             if (pathName.match(endpoint.name)) {
                 RouteResponse = endpoint;
+                return RouteResponse;
             }
             else {
                 RouteResponse = RouteConfig.Configs;
+                return RouteResponse;
             }
         }
-        return RouteResponse;
     }
     retrieveResponse(requestPath) {
         const RouteResponse = this.loopOverRouteConfig(requestPath);

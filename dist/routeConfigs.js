@@ -7,7 +7,7 @@ class RouteConfig {
         this.Configs = this.readConfig();
     }
     retrieveConfigs() {
-        let files = Fs.readdirSync('../config/');
+        let files = Fs.readdirSync('.');
         return files;
     }
     readConfig() {
@@ -19,7 +19,7 @@ class RouteConfig {
                 currentFile = file;
             }
         }
-        return yamlFile = Yaml.load(`../config/${currentFile}`);
+        return yamlFile = Yaml.load(`${currentFile}`);
     }
 }
 exports.default = RouteConfig;

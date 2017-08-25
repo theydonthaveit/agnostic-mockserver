@@ -7,7 +7,62 @@ default_bad_url: '{
     "errorMessage": "string",
     "confirmedCarrierFailure": true
   }'
-endpoints: 
+endpoints:
+  - name: health
+    method: GET
+    responseContentType: application/json
+    exampleResponse: '{
+      "overview": "ok",
+      "components": [
+        {
+          "name": "database",
+          "ok": true,
+          "criticalComponent": true,
+          "description": "ok"
+        },
+        {
+          "name": "internet",
+          "ok": true,
+          "criticalComponent": true,
+          "description": "ok"
+        },
+        {
+          "name": "dhl",
+          "ok": true,
+          "criticalComponent": false,
+          "description": "ok"
+        },
+        {
+          "name": "ups",
+          "ok": true,
+          "criticalComponent": false,
+          "description": "ok"
+        },
+        {
+          "name": "falcon",
+          "ok": true,
+          "criticalComponent": false,
+          "description": "ok"
+        }
+      ],
+      "reports": [
+        {
+          "name": "clock",
+          "data": "2017-07-31T11:39:55.357Z[UTC]"
+        },
+        {
+          "name": "buildInfo",
+          "data": {
+            "name": "firefly",
+            "jenkinsBuild": "299",
+            "gitCommit": "d33383597f39da2e2edf005e120dd10129b52c9d",
+            "scalaVersion": "2.11.7",
+            "version": "0.2",
+            "sbtVersion": "0.13.11"
+          }
+        }
+      ]
+    }'
   - name: carrier
     method: POST
     responseContentType: application/json
@@ -728,102 +783,19 @@ endpoints:
     method: GET
     responseContentType: application/json
     exampleResponse: '{
-      "overview": "ok",
-      "components": [
-        {
-          "name": "database",
-          "ok": true,
-          "criticalComponent": true,
-          "description": "ok"
-        },
-        {
-          "name": "internet",
-          "ok": true,
-          "criticalComponent": true,
-          "description": "ok"
-        }
-      ]
+        "overview": "ok",
+        "components": [
+            {
+            "name": "database",
+            "ok": true,
+            "criticalComponent": true,
+            "description": "ok"
+            },
+            {
+            "name": "internet",
+            "ok": true,
+            "criticalComponent": true,
+            "description": "ok"
+            }
+        ]
     }'
-    invalidRequest:
-    - "400"
-    - '{
-        "errorCode": "InvalidRemoteServiceResponse",
-        "errorMessage": "string",
-        "confirmedCarrierFailure": true
-      }'
-    internalServerError:
-    - "500"
-    - '{
-        "errorCode": "InvalidRemoteServiceResponse",
-        "errorMessage": "string",
-        "confirmedCarrierFailure": true
-      }'
-  - name: health
-    method: GET
-    responseContentType: application/json
-    exampleResponse: '{
-      "overview": "ok",
-      "components": [
-        {
-          "name": "database",
-          "ok": true,
-          "criticalComponent": true,
-          "description": "ok"
-        },
-        {
-          "name": "internet",
-          "ok": true,
-          "criticalComponent": true,
-          "description": "ok"
-        },
-        {
-          "name": "dhl",
-          "ok": true,
-          "criticalComponent": false,
-          "description": "ok"
-        },
-        {
-          "name": "ups",
-          "ok": true,
-          "criticalComponent": false,
-          "description": "ok"
-        },
-        {
-          "name": "falcon",
-          "ok": true,
-          "criticalComponent": false,
-          "description": "ok"
-        }
-      ],
-      "reports": [
-        {
-          "name": "clock",
-          "data": "2017-07-31T11:39:55.357Z[UTC]"
-        },
-        {
-          "name": "buildInfo",
-          "data": {
-            "name": "firefly",
-            "jenkinsBuild": "299",
-            "gitCommit": "d33383597f39da2e2edf005e120dd10129b52c9d",
-            "scalaVersion": "2.11.7",
-            "version": "0.2",
-            "sbtVersion": "0.13.11"
-          }
-        }
-      ]
-    }'
-    invalidRequest:
-    - "400"
-    - '{
-        "errorCode": "InvalidRemoteServiceResponse",
-        "errorMessage": "string",
-        "confirmedCarrierFailure": true
-      }'
-    internalServerError:
-    - "500"
-    - '{
-        "errorCode": "InvalidRemoteServiceResponse",
-        "errorMessage": "string",
-        "confirmedCarrierFailure": true
-      }'
