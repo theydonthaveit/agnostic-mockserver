@@ -3,9 +3,8 @@ import RouteConfigs from './routeConfigs'
 class GetResponse {
     constructor() {}
 
-    loopOverRouteConfig(requestPath: string) {
+    loopOverRouteConfig(pathName: string) {
         const RouteConfig = new RouteConfigs()
-        const pathName = requestPath.split('/').join('')
         let RouteResponse
 
         for ( let endpoint of RouteConfig.Configs.endpoints ) {
@@ -21,8 +20,8 @@ class GetResponse {
     }
 
     public retrieveResponse(requestPath: string) {
-        const RouteResponse = this.loopOverRouteConfig(requestPath)
         const pathName = requestPath.split('/').join('')
+        const RouteResponse = this.loopOverRouteConfig(pathName)
 
         if ( pathName.match(RouteResponse.name) ) {
             return RouteResponse.exampleResponse

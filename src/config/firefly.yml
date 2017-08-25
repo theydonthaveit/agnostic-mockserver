@@ -116,34 +116,26 @@ endpoints:
     exampleResponse: '{
       "carrier": "INTERNAL"
     }'
-    invalidRequest:
-    - "400"
-    - '{
+    invalidRequest: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
-    unfulfillableRequest:
-    - "422"
-    - '{
+    }'
+    unfulfillableRequest: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
-    internalServerError:
-    - "500"
-    - '{
+    }'
+    internalServerError: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
-    badGateway:
-    - "502"
-    - '{
+    }'
+    badGateway: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
+    }'
   - name: bookshipment
     method: POST
     schema: '{
@@ -350,34 +342,26 @@ endpoints:
         }
       ]
     }'
-    invalidRequest:
-    - "400"
-    - '{
+    invalidRequest: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
-    unfulfillableRequest:
-    - "422"
-    - '{
+    }'
+    unfulfillableRequest: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
-    internalServerError:
-    - "500"
-    - '{
+    }'
+    internalServerError: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
-    badGateway:
-    - "502"
-    - '{
+    }'
+    badGateway: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
+    }'
   - name: v2bookshipment
     method: POST
     responseContentType: application/json
@@ -498,34 +482,26 @@ endpoints:
         }
       ]
     }'
-    invalidRequest:
-    - "400"
-    - '{
+    invalidRequest: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
-    unfulfillableRequest:
-    - "422"
-    - '{
+    }'
+    unfulfillableRequest: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
-    internalServerError:
-    - "500"
-    - '{
+    }'
+    internalServerError: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
-    badGateway:
-    - "502"
-    - '{
+    }'
+    badGateway: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
+    }'
   - name: v3bookshipment
     method: POST
     responseContentType: application/json
@@ -670,34 +646,26 @@ endpoints:
         }
       ]
     }'
-    invalidRequest:
-    - "400"
-    - '{
+    invalidRequest: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
-    unfulfillableRequest:
-    - "422"
-    - '{
+    }'
+    unfulfillableRequest: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
-    internalServerError:
-    - "500"
-    - '{
+    }'
+    internalServerError: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
-    badGateway:
-    - "502"
-    - '{
+    }'
+    badGateway: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
+    }'
   - name: validateaddress
     method: POST
     schema: '{
@@ -751,34 +719,26 @@ endpoints:
         }
       ]
     }'
-    invalidRequest:
-    - "400"
-    - '{
+    invalidRequest: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
-    unfulfillableRequest:
-    - "422"
-    - '{
+    }'
+    unfulfillableRequest: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
-    internalServerError:
-    - "500"
-    - '{
+    }'
+    internalServerError: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
-    badGateway:
-    - "502"
-    - '{
+    }'
+    badGateway: '{
         "errorCode": "InvalidRemoteServiceResponse",
         "errorMessage": "string",
         "confirmedCarrierFailure": true
-      }'
+    }'
   - name: lbhealth
     method: GET
     responseContentType: application/json
@@ -799,3 +759,4 @@ endpoints:
             }
         ]
     }'
+endofpoints: end

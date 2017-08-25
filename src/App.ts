@@ -21,10 +21,10 @@ class App {
     private mouthRoutes(): void {
         const g = new GetResponse()
         const p = new PostResponse()
-    
+
         this.Hapi.route({
             method: 'GET',
-            path: '/favicon.ico',
+            path: '/{any*}',
             config: {
             auth: false,
                 cache: {
@@ -32,54 +32,29 @@ class App {
                 }
             },
             handler: function (request, reply) {
-                return reply().code(204).type('image/x-icon');
-            }
-        })
-
-        this.Hapi.route({
-            method: 'GET',
-            path: '/{operation}',
-            handler: function (request, reply) {
+                // wasn't aware of a better solution to get around this shit
+                if ( request.path.match('favicon') ) {
+                    return reply().code(204).type('image/x-icon');
+                }
+                
                 reply(g.retrieveResponse(request.path))
             }
         })
 
         this.Hapi.route({
             method: 'POST',
-            path: '/carrier',
+            path: '/{any*}',
+            config: {
+            auth: false,
+                cache: {
+                    expiresIn: 1
+                }
+            },
             handler: function (request, reply) {
-                reply(p.retrieveResponse(request.path, request.payload))
-            }
-        })
+                if ( request.path.match('favicon') ) {
+                    return reply().code(204).type('image/x-icon');
+                }
 
-        this.Hapi.route({
-            method: 'POST',
-            path: '/book/shipment',
-            handler: function (request, reply) {
-                reply(p.retrieveResponse(request.path, request.payload))
-            }
-        })
-
-        this.Hapi.route({
-            method: 'POST',
-            path: '/v2/book/shipment',
-            handler: function (request, reply) {
-                reply(p.retrieveResponse(request.path, request.payload))
-            }
-        })
-
-        this.Hapi.route({
-            method: 'POST',
-            path: '/v3/book/shipment',
-            handler: function (request, reply) {
-                reply(p.retrieveResponse(request.path, request.payload))
-            }
-        })
-
-        this.Hapi.route({
-            method: 'POST',
-            path: '/validate/shipment',
-            handler: function (request, reply) {
                 reply(p.retrieveResponse(request.path, request.payload))
             }
         })
