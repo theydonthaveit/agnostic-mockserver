@@ -5,9 +5,9 @@ class PostResponse {
 
     constructor() {}
 
-    loopOverRouteConfig(requestPath: string) {
+    loopOverRouteConfig(pathName: string) {
         const RouteConfig = new RouteConfigs()
-        const pathName = requestPath.split('/').join('')
+       
         let RouteResponse
 
         for ( let endpoint of RouteConfig.Configs.endpoints ) {
@@ -21,13 +21,15 @@ class PostResponse {
 
     public retrieveResponse(requestPath: string, payload: any) {
         const AJV = new Ajv()
-        const RouteResponse = this.loopOverRouteConfig(requestPath)
-        const pathName = requestPath.split('/').join('')
 
+        const pathName = requestPath.split('/').join('')
+        const RouteResponse = this.loopOverRouteConfig(pathName)
+
+        let validSchema
         let isValid
 
         if ( pathName.match(RouteResponse.name) ) {
-            let validSchema = AJV.compile(JSON.parse(RouteResponse.schema))
+            validSchema = AJV.compile(JSON.parse(RouteResponse.schema))
             isValid = validSchema(payload)
         }
         
@@ -36,11 +38,15 @@ class PostResponse {
                 return RouteResponse.exampleResponse
             }
             else {
-                return RouteResponse.invalidRequest
+                let response = JSON.parse(RouteResponse.invalidRequest)
+                response.errorMessage = validSchema.errors[0].message
+                return response
             }
         }
         else {
-            return RouteResponse.unfulfillableRequest
+            let response = JSON.parse(RouteResponse.unfulfillableRequest)
+            response.errorMessage = validSchema.errors[0].message
+            return response
         }
     }
 }
